@@ -17,7 +17,7 @@ Keep two quality tracks separate:
 
 ## Current baseline
 
-- Offline suite: **200 tests and 51 subtests pass** after the current quality
+- Offline suite: **201 tests and 51 subtests pass** after the current quality
   fixes.
 - Development-only Python static baseline: **12/12 labeled positives and
   12/12 clean cases** on 24 self-authored cases. This is a regression smoke
@@ -153,7 +153,11 @@ security of arbitrary projects.
   attack-path/precondition hypotheses, challenge opinions, and unexecuted safe
   test suggestions.
 - Staged evaluation uses temperature 0, matching the direct baseline.
-- Full offline test suite passes: **200 tests and 51 subtests**; compileall and
+- Optional `pair_id`, `pair_role`, and `pair_category` dataset metadata now
+  validates a vulnerable/fixed pair and reports paired accuracy separately.
+  The development SQL interpolation/parameter-binding pair passes the local
+  deterministic smoke check; this one pair is not general accuracy evidence.
+- Full offline test suite passes: **201 tests and 51 subtests**; compileall and
   `git diff --check` also pass.
 - Deterministic development smoke benchmark returns 12/12 positive findings,
   0 false positives across 12 clean cases, and exact source-line evidence on
@@ -186,11 +190,24 @@ labels.
 
 ## Use of external references
 
+- OpenRedTeaming and Awesome-LLM-Red-Teaming are research/taxonomy maps for
+  LLM safety testing, not source-code vulnerability corpora. Use their
+  coverage-stratification/evaluation framing; do not copy their unrelated
+  jailbreak attack payloads into source review.
+- Microsoft AI Red-Teaming Playground Labs contributes explicit scenario,
+  category, and difficulty metadata patterns, but its target is model behavior
+  and its challenge prompts include out-of-scope harmful-content tests. Do not
+  import those prompts or app.
+- The llm-red-teaming-dataset categories describe model-output safety
+  dimensions, not code vulnerabilities; retain only the general idea of
+  explicit category/severity metadata, and do not import its prompts.
 - OWASP BenchmarkJava is relevant only if Java review becomes an intended
-  scope; it is a purpose-built scanner benchmark and GPL-2.0.
+  scope; its labeled expected-results/scorecard pattern is useful now, but its
+  Java samples/app are not imported or run and it is GPL-2.0.
 - PrimeVul is a possible C/C++ research dataset, but the dataset is separate
   from its code repository; verify data terms, provenance, and leakage risk
-  before use.
+  before use. Its vulnerable/fixed pair pattern is now supported in the
+  evaluator without importing its corpus.
 - CodeQL query tests are a regression-harness pattern, not an LLM-quality
   benchmark. Review CodeQL's terms before using its CLI or bundle.
 - Existing SmartBugs material is relevant only to Solidity coverage;
