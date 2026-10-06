@@ -17,7 +17,7 @@ Keep two quality tracks separate:
 
 ## Current baseline
 
-- Offline suite: **194 tests and 51 subtests pass** after the current quality
+- Offline suite: **200 tests and 51 subtests pass** after the current quality
   fixes.
 - Development-only Python static baseline: **12/12 labeled positives and
   12/12 clean cases** on 24 self-authored cases. This is a regression smoke
@@ -142,7 +142,19 @@ security of arbitrary projects.
 - Challenge opinions link to stable candidate IDs, include their reviewer
   model, and appear in final reports without overriding deterministic candidate
   status or claiming proof.
-- Full offline test suite passes: **194 tests and 51 subtests**.
+- Red-team mode no longer infers local file reads from prompt paths or project
+  names. It requires explicitly supplied source, lists the files being sent
+  to providers, and fails before provider calls when source is missing.
+- Empty provider replies and incomplete focus/challenge outputs fail the
+  evidence gate; completed negative reviews require explicit no-candidate
+  markers.
+- Citation grounding binds quotes to the cited complete line range (maximum
+  eight lines) and final candidate reports retain the quote, category,
+  attack-path/precondition hypotheses, challenge opinions, and unexecuted safe
+  test suggestions.
+- Staged evaluation uses temperature 0, matching the direct baseline.
+- Full offline test suite passes: **200 tests and 51 subtests**; compileall and
+  `git diff --check` also pass.
 - Deterministic development smoke benchmark returns 12/12 positive findings,
   0 false positives across 12 clean cases, and exact source-line evidence on
   the 24-case development set. This is tuned development data, not independent
@@ -163,6 +175,9 @@ security of arbitrary projects.
 6. Add benchmark cases only for gaps demonstrated by this evaluation. External
    repositories are references and optional data sources, not runtime
    dependencies.
+7. Extend deterministic context and evaluation beyond the current
+    single-file Python scope; multi-file helper, call-site, and middleware
+    coverage is not yet established.
 
 The live held-out evaluation remains intentionally blocked until the blinded
 second review has been completed and labels reconciled. The user authorized
