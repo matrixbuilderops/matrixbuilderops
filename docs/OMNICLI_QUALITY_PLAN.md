@@ -137,11 +137,16 @@ security of arbitrary projects.
   checkpoint resume, and red-team evidence handling.
 - Same-module request-hook presence no longer suppresses deterministic
   authorization candidates.
-- The quality gate reports per-family metrics and does not hide failed or
-  unpaired models.
-- Challenge opinions link to stable candidate IDs but do not override
-  deterministic candidate status.
-- Full offline test suite passes: 194 tests and 51 subtests.
+- The quality gate reports per-family metrics, rejects failed/unpaired and
+  duplicate model rows, and cannot pass by silently dropping failed trials.
+- Challenge opinions link to stable candidate IDs, include their reviewer
+  model, and appear in final reports without overriding deterministic candidate
+  status or claiming proof.
+- Full offline test suite passes: **194 tests and 51 subtests**.
+- Deterministic development smoke benchmark returns 12/12 positive findings,
+  0 false positives across 12 clean cases, and exact source-line evidence on
+  the 24-case development set. This is tuned development data, not independent
+  quality evidence.
 - Blinded reviewer packet is prepared; keep the answer key private until
   adjudication.
 
@@ -159,6 +164,11 @@ security of arbitrary projects.
    repositories are references and optional data sources, not runtime
    dependencies.
 
+The live held-out evaluation remains intentionally blocked until the blinded
+second review has been completed and labels reconciled. The user authorized
+provider calls, but no provider evaluation has been run against provisional
+labels.
+
 ## Use of external references
 
 - OWASP BenchmarkJava is relevant only if Java review becomes an intended
@@ -174,4 +184,3 @@ security of arbitrary projects.
 - Do not add another orchestration framework now. Study checkpoint, retry,
   timeout, replay, budget, and observability patterns only to fill measured
   gaps in OmniCLI's existing runner.
-
